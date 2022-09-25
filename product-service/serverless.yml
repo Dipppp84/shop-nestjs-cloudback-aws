@@ -1,0 +1,42 @@
+service: dipppp84-product-service
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-west-1
+  httpApi:
+    cors: true
+
+
+plugins:
+  - serverless-plugin-optimize
+#  - serverless-offline
+#  - serverless-plugin-common-excludes
+#  - serverless-plugin-include-dependencies
+
+custom:
+  optimize:
+    external: [ 'swagger-ui-dist' ]
+#  webpack:
+#    webpackConfig: ./webpack.config.js
+#    includeModules: true
+
+functions:
+  products:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: GET
+          path: /products
+  productsById:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: GET
+          path: /products/{get+}
+  swagger:
+    handler: dist/main.handler
+    events:
+      - http:
+          method: GET
+          path: /api-json/{get+}
