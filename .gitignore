@@ -38,3 +38,6 @@ lerna-debug.log*
 
 /product-service/.serverless
 .serverless
+
+/product-service/.env
+.env

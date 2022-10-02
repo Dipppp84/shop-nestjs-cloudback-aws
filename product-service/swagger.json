@@ -13,11 +13,44 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Product"
+                    "$ref": "#/components/schemas/ProductDto"
                   }
                 }
               }
             }
+          }
+        },
+        "tags": [
+          "Product"
+        ]
+      },
+      "post": {
+        "operationId": "ProductController_createProduct",
+        "summary": "Add new Product",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Album is created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. body does not contain required fields"
           }
         },
         "tags": [
@@ -45,7 +78,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Product"
+                  "$ref": "#/components/schemas/ProductDto"
                 }
               }
             }
@@ -70,7 +103,7 @@
   "servers": [],
   "components": {
     "schemas": {
-      "Product": {
+      "ProductDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -87,6 +120,9 @@
           },
           "image": {
             "type": "string"
+          },
+          "count": {
+            "type": "number"
           }
         },
         "required": [
@@ -94,7 +130,35 @@
           "title",
           "description",
           "price",
-          "image"
+          "image",
+          "count"
+        ]
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "image": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "price",
+          "image",
+          "count"
         ]
       }
     }
