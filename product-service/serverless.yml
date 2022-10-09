@@ -1,0 +1,54 @@
+service: dipppp84-product-service
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-west-1
+  httpApi:
+    cors: true
+  environment:
+    POSTGRES_HOST: ${env:POSTGRES_HOST}
+    PORT_DB: ${env:PORT_DB}
+    POSTGRES_USER: ${env:POSTGRES_USER}
+    POSTGRES_PASSWORD: ${env:POSTGRES_PASSWORD}
+    POSTGRES_DB: ${env:POSTGRES_DB}
+
+plugins:
+  - serverless-plugin-optimize
+  #  - serverless-offline
+  - serverless-plugin-common-excludes
+  - serverless-plugin-include-dependencies
+
+custom:
+  optimize:
+    external: [ 'swagger-ui-dist' ]
+#  webpack:
+#    webpackConfig: ./webpack.config.js
+#    includeModules: true
+
+functions:
+  products:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          method: GET
+          path: /products
+  productsById:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          method: GET
+          path: /products/{get+}
+  createProduct:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          method: POST
+          path: /products
+  swagger:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          method: GET
+          path: /api-json/{get+}
